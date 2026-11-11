@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}{{ article.title }} · CTI{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="page-body">
+        <main>
+            <div class="breadcrumb">
+                <a href="{{ url_for('index') }}">Home</a> &raquo;
+                <a href="{{ url_for('index', cat=article.category) }}">{{ article.category }}</a> &raquo;
+                <strong>{{ article.subcategory or article.title }}</strong>
+            </div>
+
+            <article class="article-full">
+                <h1>{{ article.title }}</h1>
+                <div class="meta">
+                    By {{ article.author }} · {{ article.date.strftime('%B %d, %Y') }}
+                    · Category: {{ article.category }}
+                </div>
+                <img class="hero" src="{{ article.image }}" alt="{{ article.title }}">
+                <p><strong>{{ article.summary }}</strong></p>
+                <p>{{ article.content }}</p>
+
+                {% if article.tags %}
+                <div class="tags">
+                    {% for t in article.tags %}<span>#{{ t }}</span>{% endfor %}
+                </div>
+                {% endif %}
+            </article>
+
+            {% if related %}
+            <div class="section-title" style="margin-top:40px;"><h2>Related Articles</h2></div>
+            <div class="article-list">
+                {% for a in related %}
+                <article class="article-card">
+                    <img class="thumb" src="{{ a.image }}" alt="{{ a.title }}">
+                    <div>
+                        <div class="date">{{ a.date.strftime('%Y-%m-%d') }}</div>
+                        <h3><a href="{{ url_for('article', id=a._id) }}">{{ a.title }}</a></h3>
+                        <p>{{ a.summary }}</p>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </main>
+
+        <aside class="sidebar">
+    {% for ad in sponsor_ads %}
+    <a href="{{ ad.link or '#' }}" target="_blank" class="sponsor-ad" style="text-decoration:none; display:block;">
+        <h3>{{ ad.title }}</h3>
+        {% if ad.subtitle %}<p>{{ ad.subtitle }}</p>{% endif %}
+    </a>
+    {% endfor %}
+
+    <div class="newsletter">
+        <h3>📩 Newsletter</h3>
+        <p>Get weekly threat intel briefings.</p>
+        <button>Subscribe</button>
+    </div>
+
+    {% if directory_ads %}
+    <div class="widget">
+        <div class="widget-header">Directory of Suppliers</div>
+        <div class="widget-body">
+            <ul>
+                {% for d in directory_ads %}
+                <li><a href="{{ d.link or '#' }}" target="_blank">▸ {{ d.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+</aside>
+    </div>
+</div>
+{% endblock %}

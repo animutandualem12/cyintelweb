@@ -1,0 +1,543 @@
+{% extends "base.html" %}
+{% block title %}Login · CTI{% endblock %}
+
+{% block content %}
+
+<style>
+/* =========================================================
+   CTI — EMBOSSED LOGIN PAGE
+   ========================================================= */
+
+.login-page {
+    min-height: calc(100vh - 120px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* ---------------------------------------------------------
+   ANIMATED BACKGROUND
+   --------------------------------------------------------- */
+
+.login-page::before {
+    content: "";
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0, 212, 255, 0.12),
+            transparent 65%
+        );
+
+    top: -250px;
+    left: -180px;
+
+    animation: backgroundPulse 6s ease-in-out infinite;
+}
+
+.login-page::after {
+    content: "";
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(139, 92, 246, 0.12),
+            transparent 65%
+        );
+
+    bottom: -220px;
+    right: -150px;
+
+    animation: backgroundPulse 7s ease-in-out infinite reverse;
+}
+
+@keyframes backgroundPulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+
+    50% {
+        transform: scale(1.15);
+        opacity: 1;
+    }
+}
+
+
+/* ---------------------------------------------------------
+   LOGIN CARD
+   --------------------------------------------------------- */
+
+.form-card {
+    position: relative;
+    z-index: 2;
+
+    width: 100%;
+    max-width: 420px;
+
+    padding: 38px 36px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(15, 32, 55, 0.98),
+            rgba(4, 15, 30, 0.98)
+        );
+
+    border: 1px solid rgba(0, 212, 255, 0.28);
+    border-radius: 14px;
+
+    /* Main embossed effect */
+    box-shadow:
+        inset 0 1px 1px rgba(255,255,255,0.08),
+        inset 0 -8px 20px rgba(0,0,0,0.35),
+        0 8px 0 rgba(0,0,0,0.25),
+        0 20px 50px rgba(0,0,0,0.45),
+        0 0 30px rgba(0,212,255,0.08);
+
+    backdrop-filter: blur(12px);
+
+    animation: cardAppear 0.8s ease-out;
+}
+
+
+/* ---------------------------------------------------------
+   CARD TOP HIGHLIGHT
+   --------------------------------------------------------- */
+
+.form-card::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: 12%;
+    right: 12%;
+
+    height: 1px;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(0,212,255,0.8),
+        transparent
+    );
+
+    box-shadow:
+        0 0 10px rgba(0,212,255,0.7);
+}
+
+
+/* ---------------------------------------------------------
+   CARD ANIMATION
+   --------------------------------------------------------- */
+
+@keyframes cardAppear {
+
+    from {
+        opacity: 0;
+        transform:
+            translateY(30px)
+            scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+/* ---------------------------------------------------------
+   LOGIN TITLE
+   --------------------------------------------------------- */
+
+.form-card h2 {
+    margin: 0 0 28px;
+
+    text-align: center;
+
+    color: #ffffff;
+
+    font-size: 1.65rem;
+    font-weight: 800;
+
+    letter-spacing: 0.5px;
+
+    text-shadow:
+        0 2px 4px rgba(0,0,0,0.6),
+        0 0 15px rgba(0,212,255,0.18);
+}
+
+
+/* ---------------------------------------------------------
+   FORM GROUP
+   --------------------------------------------------------- */
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #b9c8d8;
+
+    font-size: 0.85rem;
+    font-weight: 700;
+
+    letter-spacing: 0.4px;
+}
+
+
+/* ---------------------------------------------------------
+   INPUTS — EMBOSSED
+   --------------------------------------------------------- */
+
+.form-group input {
+    width: 100%;
+    height: 46px;
+
+    box-sizing: border-box;
+
+    padding: 0 14px;
+
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            145deg,
+            #071827,
+            #0d2237
+        );
+
+    border: 1px solid #1c405c;
+
+    border-radius: 7px;
+
+    outline: none;
+
+    font-size: 0.9rem;
+
+    /* Inner embossed effect */
+    box-shadow:
+        inset 2px 2px 5px rgba(0,0,0,0.55),
+        inset -1px -1px 2px rgba(255,255,255,0.05),
+        0 2px 4px rgba(0,0,0,0.25);
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.2s ease;
+}
+
+
+/* Placeholder */
+
+.form-group input::placeholder {
+    color: #6f8499;
+}
+
+
+/* Focus */
+
+.form-group input:focus {
+
+    border-color: #00D4FF;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        inset 2px 2px 5px rgba(0,0,0,0.55),
+        0 0 0 2px rgba(0,212,255,0.08),
+        0 0 15px rgba(0,212,255,0.18);
+}
+
+
+/* ---------------------------------------------------------
+   SIGN IN BUTTON
+   --------------------------------------------------------- */
+
+.btn-submit {
+    position: relative;
+
+    width: 100%;
+    height: 46px;
+
+    margin-top: 8px;
+
+    border: 1px solid #168bb0;
+    border-radius: 7px;
+
+    color: #ffffff;
+
+    font-size: 0.95rem;
+    font-weight: 800;
+
+    letter-spacing: 0.6px;
+
+    cursor: pointer;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            #087fa8,
+            #075578
+        );
+
+    /* Embossed button */
+    box-shadow:
+        inset 0 1px 1px rgba(255,255,255,0.25),
+        inset 0 -3px 5px rgba(0,0,0,0.35),
+        0 3px 0 #032f44,
+        0 7px 15px rgba(0,0,0,0.3);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        filter 0.2s ease;
+}
+
+
+/* Button shine */
+
+.btn-submit::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 70%;
+    height: 100%;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,0.25),
+        transparent
+    );
+
+    transform: skewX(-25deg);
+
+    animation: loginShine 3.5s infinite;
+}
+
+@keyframes loginShine {
+
+    0% {
+        left: -120%;
+    }
+
+    45% {
+        left: 130%;
+    }
+
+    100% {
+        left: 130%;
+    }
+}
+
+
+/* Hover */
+
+.btn-submit:hover {
+
+    transform: translateY(-2px);
+
+    filter: brightness(1.15);
+
+    box-shadow:
+        inset 0 1px 2px rgba(255,255,255,0.3),
+        inset 0 -3px 5px rgba(0,0,0,0.3),
+        0 5px 0 #032f44,
+        0 10px 22px rgba(0,0,0,0.4),
+        0 0 18px rgba(0,212,255,0.15);
+}
+
+
+/* Click */
+
+.btn-submit:active {
+
+    transform: translateY(2px);
+
+    box-shadow:
+        inset 0 3px 6px rgba(0,0,0,0.45),
+        0 1px 0 #032f44;
+}
+
+
+/* ---------------------------------------------------------
+   REGISTER LINK
+   --------------------------------------------------------- */
+
+.form-card p {
+    text-align: center;
+
+    color: #91a4b8;
+}
+
+.form-card p a {
+
+    color: #00D4FF;
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition:
+        color 0.2s ease,
+        text-shadow 0.2s ease;
+}
+
+.form-card p a:hover {
+
+    color: #6eeaff;
+
+    text-shadow:
+        0 0 10px rgba(0,212,255,0.5);
+}
+
+
+/* ---------------------------------------------------------
+   FLASH MESSAGE
+   --------------------------------------------------------- */
+
+.form-card .flash {
+
+    padding: 10px 12px;
+
+    margin-bottom: 18px;
+
+    border-radius: 6px;
+
+    font-size: 0.85rem;
+
+    border: 1px solid rgba(255,255,255,0.08);
+
+    box-shadow:
+        inset 0 1px 2px rgba(255,255,255,0.05),
+        0 3px 8px rgba(0,0,0,0.25);
+}
+
+
+/* ---------------------------------------------------------
+   MOBILE
+   --------------------------------------------------------- */
+
+@media (max-width: 600px) {
+
+    .login-page {
+        padding: 30px 15px;
+    }
+
+    .form-card {
+        padding: 30px 24px;
+        border-radius: 12px;
+    }
+
+    .form-card h2 {
+        font-size: 1.4rem;
+    }
+}
+</style>
+
+<div class="login-page">
+
+```
+<div class="form-card">
+
+    <h2>🔐 Sign In</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% for c, m in messages %}
+
+            <div class="flash {{ c }}">
+                {{ m }}
+            </div>
+
+        {% endfor %}
+
+    {% endwith %}
+
+
+    <form method="post">
+
+        <div class="form-group">
+
+            <label for="username">
+                Username
+            </label>
+
+            <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Enter your username"
+                autocomplete="username"
+                required
+                autofocus
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="password">
+                Password
+            </label>
+
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+                required
+            >
+
+        </div>
+
+
+        <button
+            class="btn-submit"
+            type="submit">
+            Sign In
+        </button>
+
+    </form>
+
+
+    <p style="margin-top:20px; font-size:0.9rem;">
+        No account?
+        <a href="{{ url_for('register') }}">
+            Create one
+        </a>
+    </p>
+
+</div>
+```
+
+</div>
+
+{% endblock %}

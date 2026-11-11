@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% block title %}Home · Cyber Security Intelligence{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="page-body">
+
+        <!-- ========================= MAIN COLUMN ========================= -->
+        <main>
+            <div class="breadcrumb">
+                {% if active_category %}
+                    <a href="{{ url_for('index') }}">Home</a> &raquo; <strong>{{ active_category }}</strong>
+                {% else %}
+                    <strong>Latest Threat Intelligence</strong>
+                {% endif %}
+            </div>
+
+            {% if featured %}
+            <div class="featured">
+                <img src="{{ featured.image }}" alt="{{ featured.title }}">
+                <div>
+                    <div class="date">{{ featured.date.strftime('%Y-%m-%d') }} · {{ featured.category }}</div>
+                    <h2><a href="{{ url_for('article', id=featured._id) }}">{{ featured.title }}</a></h2>
+                    <p>{{ featured.summary }}</p>
+                    <a class="read-more" href="{{ url_for('article', id=featured._id) }}">Read More →</a>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="section-title">
+                <h2>{% if query %}Search: "{{ query }}"{% else %}Latest Articles{% endif %}</h2>
+            </div>
+
+            {% if articles %}
+            <div class="article-list">
+                {% for a in articles %}
+                <article class="article-card">
+                    <img class="thumb" src="{{ a.image }}" alt="{{ a.title }}">
+                    <div>
+                        <div class="date">{{ a.date.strftime('%Y-%m-%d') }} · {{ a.category }}</div>
+                        <h3><a href="{{ url_for('article', id=a._id) }}">{{ a.title }}</a></h3>
+                        <p>{{ a.summary }}</p>
+                        <a class="read-more" href="{{ url_for('article', id=a._id) }}">Read More</a>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+
+            
+            {% else %}
+                <p style="padding:30px 0; color:var(--text-dim);">No articles found.</p>
+            {% endif %}
+        </main>
+
+
+        <!-- ========================= SIDEBAR ========================= -->
+        <aside class="sidebar">
+
+            <!-- TEAM IMAGE SLIDER (2 slides) -->
+            <div class="team-slider">
+                <div class="team-slider-track" id="teamSlider">
+
+                    <div class="team-slide active">
+                        <img src="{{ url_for('static', filename='images/teams/team1.png') }}"
+                             alt="">
+                        <div class="team-caption"></div>
+                    </div>
+
+                    <div class="team-slide">
+                        <img src="{{ url_for('static', filename='images/teams/team2.png') }}"
+                             alt="">
+                        <div class="team-caption">CTI Analysts</div>
+                    </div>
+
+                </div>
+
+                <div class="team-dots" id="teamDots">
+                    <span class="dot active" data-index="0"></span>
+                    <span class="dot" data-index="1"></span>
+                </div>
+            </div>
+
+
+
+
+
+            <!-- TRENDING TOPICS (only ONE) -->
+            <div class="widget">
+                <div class="widget-header">Trending Topics</div>
+                <div class="widget-body">
+                    <ul>
+                        <li><a href="{{ url_for('index', tag='ransomware') }}"># Ransomware</a></li>
+                        <li><a href="{{ url_for('index', tag='apt') }}"># APT Groups</a></li>
+                        <li><a href="{{ url_for('index', tag='zero-day') }}"># Zero-Day</a></li>
+                        <li><a href="{{ url_for('index', tag='phishing') }}"># Phishing</a></li>
+                        <li><a href="{{ url_for('index', tag='malware') }}"># Malware</a></li>
+                        <li><a href="{{ url_for('index', tag='breach') }}"># Data Breach</a></li>
+                        <li><a href="{{ url_for('index', tag='cisa') }}"># CISA</a></li>
+                        <li><a href="{{ url_for('index', tag='vulnerability') }}"># Vulnerabilities</a></li>
+                        <li><a href="{{ url_for('index', tag='jobs') }}"># Jobs</a></li>
+                    </ul>
+                </div>
+            </div>
+
+
+           
+    </div>
+</div>
+{% endblock %}

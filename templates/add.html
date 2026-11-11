@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}Add Content · CTI{% endblock %}
+{% block content %}
+<div class="container" style="max-width:720px;">
+    <div class="form-card" style="max-width:100%;">
+
+        <h2>➕ Publish New Article</h2>
+        <form method="post">
+            <input type="hidden" name="kind" value="article">
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" name="title" required>
+            </div>
+            <div class="form-group">
+                <label>Category</label>
+                <select name="category">
+                    <option>News</option>
+                    <option>Business</option>
+                    <option>Government</option>
+                    <option>Technology</option>
+                    <option>Intelligence</option>
+                    <option>Jobs</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Subcategory</label>
+                <input type="text" name="subcategory" placeholder="e.g. Hackers, Ransomware">
+            </div>
+            <div class="form-group">
+                <label>Summary</label>
+                <textarea name="summary" rows="2" required></textarea>
+            </div>
+            <div class="form-group">
+                <label>Full Content</label>
+                <textarea name="content" rows="6" required></textarea>
+            </div>
+            <div class="form-group">
+                <label>Image URL (optional)</label>
+                <input type="text" name="image" placeholder="https://...">
+            </div>
+            <div class="form-group">
+                <label>Tags (comma separated)</label>
+                <input type="text" name="tags" placeholder="cisa, defense, phishing">
+            </div>
+            <button class="btn-submit" type="submit">Publish Article</button>
+        </form>
+
+        <hr style="margin:40px 0; border:none; border-top:1px solid #e3e5ee;">
+
+        <h2>🛡️ Add Threat Indicator</h2>
+        <form method="post">
+            <input type="hidden" name="kind" value="indicator">
+            <div class="form-group">
+                <label>Type</label>
+                <select name="type" required>
+                    <option value="ip">IP Address</option>
+                    <option value="domain">Domain</option>
+                    <option value="url">URL</option>
+                    <option value="sha256">SHA256</option>
+                    <option value="md5">MD5</option>
+                    <option value="email">Email</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Value</label>
+                <input type="text" name="value" required>
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea name="description" rows="2"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Tags (comma separated)</label>
+                <input type="text" name="tags">
+            </div>
+            <div class="form-group">
+                <label>Severity</label>
+                <select name="severity">
+                    <option value="low">Low</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>TLP</label>
+                <select name="tlp">
+                    <option>WHITE</option><option>GREEN</option>
+                    <option>AMBER</option><option>RED</option>
+                </select>
+            </div>
+            <button class="btn-submit" type="submit">Add Indicator</button>
+        </form>
+
+    </div>
+</div>
+{% endblock %}

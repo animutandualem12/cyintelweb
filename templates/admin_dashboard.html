@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard · CTI{% endblock %}
+{% block content %}
+
+<div class="container" style="max-width:1100px; margin-top:20px;">
+
+    <h1 style="color:#1a1a4e;">Admin Dashboard</h1>
+    <p style="color:#666;">Welcome back, <strong>{{ me.username }}</strong>.</p>
+
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:24px;">
+
+        <div class="card" style="background:#fff; padding:20px; border-radius:8px; border-left:4px solid #4a3fbf;">
+            <div style="font-size:32px; font-weight:bold; color:#4a3fbf;">{{ article_count }}</div>
+            <div style="color:#666; font-size:14px;">Articles</div>
+        </div>
+
+        <div class="card" style="background:#fff; padding:20px; border-radius:8px; border-left:4px solid #ffb300;">
+            <div style="font-size:32px; font-weight:bold; color:#ffb300;">{{ user_count }}</div>
+            <div style="color:#666; font-size:14px;">Users</div>
+        </div>
+
+        <div class="card" style="background:#fff; padding:20px; border-radius:8px; border-left:4px solid #e74c3c;">
+            <div style="font-size:32px; font-weight:bold; color:#e74c3c;">{{ ad_count }}</div>
+            <div style="color:#666; font-size:14px;">Ads</div>
+        </div>
+
+    </div>
+
+    <h2 style="margin-top:40px; color:#1a1a4e;">Quick Actions</h2>
+
+    <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:16px;">
+
+        <a href="{{ url_for('add') }}"
+           style="background:#4a3fbf; color:#fff; padding:12px 24px; border-radius:6px; text-decoration:none; font-weight:600;">
+            ➕ Add Content
+        </a>
+
+        <a href="{{ url_for('ads_manager') }}"
+           style="background:#1a1a4e; color:#fff; padding:12px 24px; border-radius:6px; text-decoration:none; font-weight:600;">
+            📢 Manage Ads
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

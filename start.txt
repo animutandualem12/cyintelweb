@@ -1,0 +1,5 @@
+/////Waitress for deployment////
+venv\Scripts\activate
+docker start mongo-cti
+python app.py
+waitress-serve --host=127.0.0.1 --port=5000 app:app

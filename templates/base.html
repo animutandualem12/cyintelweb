@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}Cyber Security Intelligence{% endblock %}</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<!-- =========================================================
+     HEADER
+     ========================================================= -->
+<header class="header">
+    <div class="container header-inner">
+
+        <!-- Logo (clickable) -->
+        <div class="logo-block">
+
+            <a href="{{ url_for('index') }}">
+                <img src="{{ url_for('static', filename='images/cyber Logo.png') }}"
+                     alt="Ethiopia Defence Cyber Intelligence"
+                     class="logo-img"
+                     onerror="this.style.display='none';">
+            </a>
+
+            <!-- Brand text (NOT clickable) -->
+            <div class="brand-text">
+                <span class="brand-line-2">
+                    የኢትዮጵያ መከላከያ ሳይበር መረጃ መምሪያ
+                </span>
+
+                <span class="brand-line-1">
+                    ETHIOPIA DEFENCE CYBER INTELLIGENCE
+                </span>
+            </div>
+
+        </div>
+
+        <!-- ... rest of header (top-bar, auth buttons) stays here ... -->
+
+    </div>
+</header>
+
+        <!-- =====================================================
+             TOP-RIGHT AUTHENTICATION BAR
+             ===================================================== -->
+        <div class="top-bar">
+            <div class="container">
+
+                <div class="auth-buttons">
+
+                    {% if me %}
+
+                        <!-- Logged-in user -->
+                        <span class="signed-in">
+                            
+                            <strong>{{ me.username }}</strong>
+
+                            {% if me.role == 'admin' %}
+                                <span style="color:#ffd400;"></span>
+                            {% endif %}
+                        </span>
+
+                        <a href="{{ url_for('logout') }}" class="btn-logout">
+                            Logout
+                        </a>
+
+                    {% else %}
+
+                        <!-- Guest -->
+                        <a href="{{ url_for('login') }}" class="btn-login">
+                            Login
+                        </a>
+
+                        <a href="{{ url_for('register') }}" class="btn-register">
+                            Register
+                        </a>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</header>
+
+
+<!-- =========================================================
+     CATEGORY MENU
+     ========================================================= -->
+<nav class="main-menu">
+
+    <div class="container">
+
+        <ul>
+
+            <!-- Public navigation -->
+            <li>
+                <a href="{{ url_for('index') }}"
+                   class="{{ 'active' if not active_category else '' }}">
+                    Home
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('index', cat='News') }}"
+                   class="{{ 'active' if active_category == 'News' else '' }}">
+                    News
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('index', cat='Technology') }}"
+                   class="{{ 'active' if active_category == 'Technology' else '' }}">
+                    Technology
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('index', cat='Intelligence') }}"
+                   class="{{ 'active' if active_category == 'Intelligence' else '' }}">
+                    Intelligence
+                </a>
+            </li>
+
+
+            <!-- =================================================
+                 LOGGED-IN USERS: Add Content
+                 (matches @login_required on /add route)
+                 ================================================= -->
+            {% if me %}
+
+                <li>
+                    <a href="{{ url_for('add') }}"
+                       class="{{ 'active' if request.endpoint == 'add' else '' }}">
+                        + Add Content
+                    </a>
+                </li>
+
+                
+            {% endif %}
+
+
+            <!-- =================================================
+                 ADMIN ONLY: Ads Manager
+                 (matches @admin_required on /ads route)
+                 ================================================= -->
+            {% if me and me.role == 'admin' %}
+
+                <li>
+                    <a href="{{ url_for('ads_manager') }}"
+                       class="{{ 'active' if request.endpoint == 'ads_manager' else '' }}">
+                        📢 Ads Manager
+                    </a>
+                </li>
+
+            {% endif %}
+
+        </ul>
+
+    </div>
+
+</nav>
+
+
+<!-- =========================================================
+     PROMO BANNER
+     ========================================================= -->
+<div class="promo-banner">
+
+    <div class="promo-track">
+
+        <span>
+            DEFENCE CYBER INTELLIGENCE (መከላከያ ሳይበር መረጃ)
+        </span>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     FLASH MESSAGES
+     ========================================================= -->
+<div class="container">
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% for category, msg in messages %}
+
+            <div class="flash {{ category }}">
+                {{ msg }}
+            </div>
+
+        {% endfor %}
+
+    {% endwith %}
+
+</div>
+
+
+
+
+<!-- =========================================================
+     PAGE CONTENT
+     ========================================================= -->
+{% block content %}{% endblock %}
+
+
+<!-- =========================================================
+     TEAM GALLERY (Adds automatically to Home Page)
+     ========================================================= -->
+{% block team_gallery %}
+<section class="team-gallery-section">
+    
+    <div class="cyber-page-header" style="text-align: center; margin-bottom: 40px;">
+        <h2>Our Cyber intelligence Team</h2>
+        <div class="cyber-header-line" style="margin: 0 auto;"></div>
+    </div>
+
+    <div class="team-grid">
+        
+        <!-- Team Member 1 -->
+        <div class="team-card">
+            <div class="team-img-wrapper">
+                <img src="{{ url_for('static', filename='images/a.jpg') }}" alt="Team Member Name">
+            </div>
+            <div class="team-info">
+                <h3>Animut. A</h3>
+                <span class="team-role">Cyber intelligence Analyst</span>
+                <p>Specializes in cyber threat intelligence and national defense infrastructure.</p>
+                <div class="team-socials">
+                    <a href="#">in</a>
+                    <a href="#">𝕏</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team Member 2 -->
+        <div class="team-card">
+            <div class="team-img-wrapper">
+                <img src="{{ url_for('static', filename='images/a.jpg') }}" alt="Team Member Name">
+            </div>
+            <div class="team-info">
+                <h3>K.esmael. A</h3>
+                <span class="team-role">Intelligence Officer</span>
+                <p>Focuses on ethical hacking, penetration testing, and vulnerability research.</p>
+                <div class="team-socials">
+                    <a href="#">in</a>
+                    <a href="#">𝕏</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team Member 3 -->
+        <div class="team-card">
+            <div class="team-img-wrapper">
+                <img src="{{ url_for('static', filename='images/a.jpg') }}" alt="Team Member Name">
+            </div>
+            <div class="team-info">
+                <h3>Etagegnehu. L</h3>
+                <span class="team-role">Security Researcher</span>
+                <p>Analyzes malware trends and develops proactive defense strategies.</p>
+                <div class="team-socials">
+                    <a href="#">in</a>
+                    <a href="#">𝕏</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team Member 4 -->
+        <div class="team-card">
+            <div class="team-img-wrapper">
+                <img src="{{ url_for('static', filename='images/t.jpg') }}" alt="Team Member Name">
+            </div>
+            <div class="team-info">
+                <h3>Tazebew .T</h3>
+                <span class="team-role">Threat Intel Specialist</span>
+                <p>Monitors global cyber threats and coordinates intelligence sharing.</p>
+                <div class="team-socials">
+                    <a href="#">in</a>
+                    <a href="#">𝕏</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}
+<!-- =========================================================
+     END TEAM GALLERY
+     ========================================================= -->
+
+
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+<footer>
+
+    <div class="container">
+
+        <div class="footer-grid">
+
+            <!-- About -->
+            <div>
+
+                <h4>About</h4>
+
+                <ul>
+                    <li><a href="{{ url_for('about') }}">About Us</a></li>
+                    <li><a href="{{ url_for('editorial_policy') }}">Editorial Policy</a></li>
+                    <li><a href="{{ url_for('contact') }}">Contact</a></li>
+
+                </ul>
+
+            </div>
+
+
+            <!-- Resources -->
+            <div>
+
+                <h4>Resources</h4>
+
+                <ul>
+
+                    <li>
+                        <a href="{{ url_for('api_indicators') }}">
+                            Public API
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ url_for('indicators_list') }}">
+                            Threat Indicators
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <!-- Follow -->
+            <div>
+
+                <h4>Follow</h4>
+
+                <ul>
+
+                    <li><a href="#">X / Twitter</a></li>
+                    <li><a href="#">LinkedIn</a></li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+
+        <!-- Footer bottom -->
+        <div class="footer-bottom">
+
+            © 2026 Cyber Intelligence ·
+            All rights reserved |
+            Animut .A
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+</body>
+</html>

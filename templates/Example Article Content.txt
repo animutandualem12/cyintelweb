@@ -1,0 +1,18 @@
+Example Article Content
+Title:  
+Emerging AI Threats in Modern Cybersecurity
+
+Category:  
+News
+
+Subcategory:  
+AI, Cyber Defense, Threat Intelligence
+
+Summary:  
+Artificial intelligence is transforming cybersecurity, but it also introduces new risks. Attackers are leveraging AI to automate phishing, evade detection, and exploit vulnerabilities faster than ever before.
+
+Full Content:  
+Artificial intelligence (AI) has become a double-edged sword in cybersecurity. While defenders use AI to detect anomalies and predict attacks, adversaries are employing it to craft sophisticated, adaptive threats.
+Recent studies highlight how generative models can produce realistic phishing emails and deepfake content that bypass traditional filters.
+To counter these challenges, organizations are adopting AI-driven intrusion detection systems and explainable models that enhance transparency and trust.
+As AI continues to evolve, collaboration between researchers, security professionals, and policymakers will be crucial to ensure a resilient digital ecosystem.

@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block title %}Ads Manager · Admin{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="page-body" style="grid-template-columns: 380px 1fr;">
+
+        <!-- LEFT: create form -->
+        <aside>
+            <div class="form-card" style="margin:0; max-width:100%;">
+                <h2>📢 New Ad</h2>
+                <form method="post" action="{{ url_for('ads_new') }}">
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Subtitle</label>
+                        <input type="text" name="subtitle">
+                    </div>
+                    <div class="form-group">
+                        <label>Body (optional)</label>
+                        <textarea name="body" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Link URL</label>
+                        <input type="text" name="link" placeholder="https://...">
+                    </div>
+                    <div class="form-group">
+                        <label>Image URL (optional)</label>
+                        <input type="text" name="image" placeholder="https://...">
+                    </div>
+                    <div class="form-group">
+                        <label>Type</label>
+                        <select name="type">
+                            <option value="sponsor">Sponsor (sidebar box)</option>
+                            <option value="banner">Banner</option>
+                            <option value="directory">Directory listing</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Position</label>
+                        <select name="position">
+                            <option value="sidebar">Sidebar</option>
+                            <option value="header">Header</option>
+                            <option value="footer">Footer</option>
+                        </select>
+                    </div>
+                    <button class="btn-submit" type="submit">Create Ad</button>
+                </form>
+            </div>
+        </aside>
+
+        <!-- RIGHT: list -->
+        <main>
+            <div class="section-title">
+                <h2>All Ads ({{ ads|length }})</h2>
+            </div>
+
+            {% if ads %}
+            <table class="cti-table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Type</th>
+                        <th>Position</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for a in ads %}
+                    <tr>
+                        <td>
+                            <strong>{{ a.title }}</strong><br>
+                            <small style="color:var(--text-dim);">{{ a.subtitle }}</small>
+                        </td>
+                        <td><span class="badge badge-tlp">{{ a.type }}</span></td>
+                        <td>{{ a.position }}</td>
+                        <td>
+                            {% if a.active %}
+                                <span class="badge badge-low">active</span>
+                            {% else %}
+                                <span class="badge badge-high">paused</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a class="btn-submit" style="padding:6px 12px; font-size:0.8rem;"
+                               href="{{ url_for('ads_toggle', id=a._id) }}">
+                               {{ 'Pause' if a.active else 'Activate' }}
+                            </a>
+                            <a class="btn-submit" style="padding:6px 12px; font-size:0.8rem; background:#c62828;"
+                               href="{{ url_for('ads_delete', id=a._id) }}"
+                               onclick="return confirm('Delete this ad?')">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p style="color:var(--text-dim); padding:30px 0;">No ads yet. Create one on the left.</p>
+            {% endif %}
+        </main>
+
+    </div>
+</div>
+{% endblock %}
