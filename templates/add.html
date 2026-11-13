@@ -5,12 +5,15 @@
     <div class="form-card" style="max-width:100%;">
 
         <h2>➕ Publish New Article</h2>
-        <form method="post">
+        <!-- MUST HAVE enctype="multipart/form-data" for file uploads to work -->
+        <form method="post" enctype="multipart/form-data">
             <input type="hidden" name="kind" value="article">
+            
             <div class="form-group">
                 <label>Title</label>
                 <input type="text" name="title" required>
             </div>
+            
             <div class="form-group">
                 <label>Category</label>
                 <select name="category">
@@ -22,34 +25,64 @@
                     <option>Jobs</option>
                 </select>
             </div>
+            
             <div class="form-group">
                 <label>Subcategory</label>
                 <input type="text" name="subcategory" placeholder="e.g. Hackers, Ransomware">
             </div>
+            
             <div class="form-group">
                 <label>Summary</label>
                 <textarea name="summary" rows="2" required></textarea>
             </div>
+            
             <div class="form-group">
                 <label>Full Content</label>
                 <textarea name="content" rows="6" required></textarea>
             </div>
+
+            <!-- ⬇️ NEW: SOURCE LINK FIELD ⬇️ -->
+            <div class="form-group">
+                <label>Source Link (Reference URL)</label>
+                <input type="url" name="source_link" placeholder="https://thehackernews.com/...">
+                <small style="color: #6c757d; display: block; margin-top: 5px;">
+                    Optional: Add the original link where this information was found.
+                </small>
+            </div>
+            <!-- ⬆️ END SOURCE LINK FIELD ⬆️ -->
+            
+            <!-- File Upload Input -->
+            <div class="form-group">
+                <label>Upload Image (from computer)</label>
+                <input type="file" name="image_file" accept="image/*" style="padding: 10px; border: 1px solid #ccc; border-radius: 4px; width: 100%;">
+                <small style="color: #6c757d; display: block; margin-top: 5px;">
+                    Uploading a file will override the Image URL below.
+                </small>
+            </div>
+
             <div class="form-group">
                 <label>Image URL (optional)</label>
                 <input type="text" name="image" placeholder="https://...">
+                <small style="color: #6c757d; display: block; margin-top: 5px;">
+                    Leave both blank to automatically fetch a related image.
+                </small>
             </div>
+            
             <div class="form-group">
                 <label>Tags (comma separated)</label>
                 <input type="text" name="tags" placeholder="cisa, defense, phishing">
             </div>
+            
             <button class="btn-submit" type="submit">Publish Article</button>
         </form>
 
         <hr style="margin:40px 0; border:none; border-top:1px solid #e3e5ee;">
 
         <h2>🛡️ Add Threat Indicator</h2>
+        <!-- This form does NOT need enctype because it doesn't handle files -->
         <form method="post">
             <input type="hidden" name="kind" value="indicator">
+            
             <div class="form-group">
                 <label>Type</label>
                 <select name="type" required>
@@ -61,18 +94,22 @@
                     <option value="email">Email</option>
                 </select>
             </div>
+            
             <div class="form-group">
                 <label>Value</label>
                 <input type="text" name="value" required>
             </div>
+            
             <div class="form-group">
                 <label>Description</label>
                 <textarea name="description" rows="2"></textarea>
             </div>
+            
             <div class="form-group">
                 <label>Tags (comma separated)</label>
                 <input type="text" name="tags">
             </div>
+            
             <div class="form-group">
                 <label>Severity</label>
                 <select name="severity">
@@ -81,13 +118,17 @@
                     <option value="high">High</option>
                 </select>
             </div>
+            
             <div class="form-group">
                 <label>TLP</label>
                 <select name="tlp">
-                    <option>WHITE</option><option>GREEN</option>
-                    <option>AMBER</option><option>RED</option>
+                    <option>WHITE</option>
+                    <option>GREEN</option>
+                    <option>AMBER</option>
+                    <option>RED</option>
                 </select>
             </div>
+            
             <button class="btn-submit" type="submit">Add Indicator</button>
         </form>
 

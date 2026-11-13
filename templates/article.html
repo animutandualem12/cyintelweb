@@ -20,8 +20,21 @@
                 <p><strong>{{ article.summary }}</strong></p>
                 <p>{{ article.content }}</p>
 
+                <!-- ⬇️ NEW: SOURCE REFERENCE LINK ⬇️ -->
+                {% if article.source_link %}
+                <div class="article-source" style="margin-top: 25px; padding: 15px; background: #f8f9fa; border-left: 4px solid #0056b3; border-radius: 4px;">
+                    <p style="margin: 0; font-size: 0.95em; color: #333;">
+                        <strong>🔗 Source / Reference:</strong> 
+                        <a href="{{ article.source_link }}" target="_blank" rel="noopener noreferrer" style="color: #0056b3; text-decoration: underline; word-break: break-all;">
+                            {{ article.source_link }}
+                        </a>
+                    </p>
+                </div>
+                {% endif %}
+                <!-- ⬆️ END SOURCE REFERENCE ⬆️ -->
+
                 {% if article.tags %}
-                <div class="tags">
+                <div class="tags" style="margin-top: 20px;">
                     {% for t in article.tags %}<span>#{{ t }}</span>{% endfor %}
                 </div>
                 {% endif %}
