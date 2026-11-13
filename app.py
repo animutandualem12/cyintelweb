@@ -5,11 +5,19 @@ from flask import (
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
+<<<<<<< HEAD
 from werkzeug.utils import secure_filename  # <-- REQUIRED FOR UPLOADS
 from datetime import datetime
 from functools import wraps
 import os
 import uuid  # <-- REQUIRED FOR UNIQUE FILENAMES
+=======
+from werkzeug.utils import secure_filename  # REQUIRED FOR UPLOADS
+from datetime import datetime
+from functools import wraps
+import os
+import uuid  # REQUIRED FOR UNIQUE FILENAMES
+>>>>>>> 0c4816f2316a8c5aad1bdf5ca6636070934e4e1a
 import requests
 from dotenv import load_dotenv
 
@@ -206,8 +214,11 @@ def get_active_ads(position=None, ad_type=None):
 def seed_articles():
     if articles.count_documents({}) > 0:
         return
+<<<<<<< HEAD
     # (Your seed data remains exactly the same, it is omitted here to save space but
     # I am including a couple of examples to ensure the code runs)
+=======
+>>>>>>> 0c4816f2316a8c5aad1bdf5ca6636070934e4e1a
     demo = [
         {
             "title": "CISA Recommends Decoy Tactics Against Hackers",
@@ -373,7 +384,11 @@ def add():
                 "subcategory": request.form.get("subcategory", ""),
                 "summary": request.form.get("summary", "").strip(),
                 "content": request.form.get("content", "").strip(),
+<<<<<<< HEAD
                 "source_link": request.form.get("source_link", "").strip(),  # ⬅️ ADD THIS LINE HERE
+=======
+                "source_link": request.form.get("source_link", "").strip(),
+>>>>>>> 0c4816f2316a8c5aad1bdf5ca6636070934e4e1a
                 "author": session.get("user"),
                 "image": image_url,
                 "date": datetime.utcnow(),
