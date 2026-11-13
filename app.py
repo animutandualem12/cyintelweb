@@ -5,11 +5,11 @@ from flask import (
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
-from werkzeug.utils import secure_filename  # <-- REQUIRED FOR UPLOADS
+from werkzeug.utils import secure_filename  # REQUIRED FOR UPLOADS
 from datetime import datetime
 from functools import wraps
 import os
-import uuid  # <-- REQUIRED FOR UNIQUE FILENAMES
+import uuid  # REQUIRED FOR UNIQUE FILENAMES
 import requests
 from dotenv import load_dotenv
 
@@ -206,8 +206,6 @@ def get_active_ads(position=None, ad_type=None):
 def seed_articles():
     if articles.count_documents({}) > 0:
         return
-    # (Your seed data remains exactly the same, it is omitted here to save space but
-    # I am including a couple of examples to ensure the code runs)
     demo = [
         {
             "title": "CISA Recommends Decoy Tactics Against Hackers",
@@ -373,7 +371,7 @@ def add():
                 "subcategory": request.form.get("subcategory", ""),
                 "summary": request.form.get("summary", "").strip(),
                 "content": request.form.get("content", "").strip(),
-                "source_link": request.form.get("source_link", "").strip(),  # ⬅️ ADD THIS LINE HERE
+                "source_link": request.form.get("source_link", "").strip(),
                 "author": session.get("user"),
                 "image": image_url,
                 "date": datetime.utcnow(),
